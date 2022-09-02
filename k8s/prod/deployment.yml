@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: example-app
-        image: <registry_host>/<registry_bucket>/example-app:<image_id> # change this later to the correct repository and image id!
+        image: mrzacarias/example-app:latest
         resources:
           limits:
             cpu: 100m

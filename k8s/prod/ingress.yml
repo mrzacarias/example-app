@@ -10,17 +10,15 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-staging"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    # nginx.ingress.kubernetes.io/ssl-redirect: "false" # Only needed if you have a ERR_TOO_MANY_REDIRECTS error
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    # - <your-host>.com # If you have your DNS configured and a CNAME pointing to the Load Balancer
-    -  <load-balancer-id>-1954319865.us-east-1.elb.amazonaws.com # your Load Balancer automatically generated DNS
+    - mrzacarias.com
     secretName: example-app-tls
   rules:
-    # - <your-host>.com # If you have your DNS configured and a CNAME pointing to the Load Balancer
-    - host:  <load-balancer-id>-1954319865.us-east-1.elb.amazonaws.com # your Load Balancer automatically generated DNS
+    - host: mrzacarias.com
       http:
         paths:
           - path: /example-app(/|$)(.*)
