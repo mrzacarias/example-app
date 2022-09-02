@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  web:
+    build:
+      context: .
+      target: dev_builder
+    command:
+      - "/bin/sh"
+      - -ecx
+      - |
+        echo 'Compiling example-app!'
+        CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin/app ./cmd/app
+        echo 'Starting example-app'
+        ./bin/app
+    ports:
+      - '1234:8080'
+      - '1235:8081'
+    volumes:
+      - .:/go/src/github.com/mrzacarias/example-app

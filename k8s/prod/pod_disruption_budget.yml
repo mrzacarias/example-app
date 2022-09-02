@@ -1,0 +1,14 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: example-app
+  namespace: default
+  labels:
+    app: example-app
+    env: prod
+spec:
+  maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: example-app
+      env: prod

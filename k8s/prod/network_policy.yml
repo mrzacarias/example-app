@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: example-app
+  namespace: default
+  labels:
+    app: example-app
+    env: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: example-app
+      env: prod
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 8080
+    - protocol: TCP
+      port: 8081
+  egress:
+  - {}
+  

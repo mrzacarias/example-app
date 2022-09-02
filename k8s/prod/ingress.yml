@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app
+  namespace: default
+  labels:
+    app: example-app
+    env: prod
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false" # Only needed if you have a ERR_TOO_MANY_REDIRECTS error
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    # - <your-host>.com # If you have your DNS configured and a CNAME pointing to the Load Balancer
+    -  <load-balancer-id>-1954319865.us-east-1.elb.amazonaws.com # your Load Balancer automatically generated DNS
+    secretName: example-app-tls
+  rules:
+    # - <your-host>.com # If you have your DNS configured and a CNAME pointing to the Load Balancer
+    - host:  <load-balancer-id>-1954319865.us-east-1.elb.amazonaws.com # your Load Balancer automatically generated DNS
+      http:
+        paths:
+          - path: /example-app(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: example-app
+                port:
+                  number: 80
+
